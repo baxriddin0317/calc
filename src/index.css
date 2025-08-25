@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.bg-custom-gradient {
+  background: linear-gradient(0.855turn,rgba(53,153,215,1) 0%,rgba(53,154,215,1) 100%);
+}
+
+@theme {
+  --breakpoint-xxs: 40px;
+}
