@@ -4,7 +4,7 @@ import './index.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/" element={<Calculator />} />

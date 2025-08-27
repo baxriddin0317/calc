@@ -38,6 +38,10 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist/app',
       emptyOutDir: true
+    },
+    base: '/',
+    server: {
+      port: 5173
     }
   };
 });

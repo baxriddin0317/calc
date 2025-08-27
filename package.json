@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build --mode standalone",
     "build:widget": "tsc -b && vite build --mode widget",
     "build:standalone": "tsc -b && vite build --mode standalone",
     "build:all": "npm run build:widget && npm run build:standalone",
     "lint": "eslint .",
     "preview": "vite preview",
+    "preview:standalone": "vite preview --port 5173",
     "preview:widget": "vite preview --port 5174"
   },
   "dependencies": {
