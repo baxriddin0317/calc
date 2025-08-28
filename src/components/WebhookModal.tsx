@@ -31,19 +31,19 @@ const WebhookModal: React.FC<WebhookModalProps> = ({
               value={webhookUrl}
               onChange={(e) => onWebhookUrlChange(e.target.value)}
               placeholder="https://your-domain.com/webhook"
-              className="w-full h-12 rounded-lg outline-none border border-black px-3"
+              className="w-full h-10 rounded-lg outline-none border border-black px-3"
             />
           </div>
           <div className="flex gap-3">
             <button
               onClick={onSubmit}
-              className="flex-1 h-12 px-6 rounded-lg bg-custom-gradient cursor-pointer text-white"
+              className="flex-1 h-10 px-6 rounded-lg bg-custom-gradient cursor-pointer text-white"
             >
               Отправить
             </button>
             <button
               onClick={onClose}
-              className="flex-1 h-12 px-6 rounded-lg border border-black hover:bg-gray-50"
+              className="flex-1 h-10 px-6 rounded-lg border border-black hover:bg-gray-50"
             >
               Отмена
             </button>

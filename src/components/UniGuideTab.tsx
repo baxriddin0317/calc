@@ -1,29 +1,30 @@
 import React from 'react';
-import type { HeadphonesType, ChargerCapacity } from '../types';
+import type { HeadphonesType, ChargerCapacity, CalculatorConfig } from '../types';
 import { TiArrowSortedDown } from 'react-icons/ti';
 import { calculatorConfig } from '../data/products';
 
-interface AudioGuideTabProps {
-  input_audioguide: number;
-  input_triggers: number;
+interface UniGuideTabProps {
+  input_rc: number;
+  input_tr: number;
   select_headphones: HeadphonesType | null;
   qty_headphones: number;
   select_charger: ChargerCapacity | null;
-  setAudioguideQty: (value: number) => void;
-  setTriggersQty: (value: number) => void;
+  setReceivers: (value: number) => void;
+  setTransmitters: (value: number) => void;
   setHeadphonesType: (value: HeadphonesType | null) => void;
   setHeadphonesQty: (value: number) => void;
   setCharger: (value: ChargerCapacity | null) => void;
+  calculatorConfig: CalculatorConfig;
 }
 
-const AudioGuideTab: React.FC<AudioGuideTabProps> = ({
-  input_audioguide,
-  input_triggers,
+const UniGuideTab: React.FC<UniGuideTabProps> = ({
+  input_rc,
+  input_tr,
   select_headphones,
   qty_headphones,
   select_charger,
-  setAudioguideQty,
-  setTriggersQty,
+  setReceivers,
+  setTransmitters,
   setHeadphonesType,
   setHeadphonesQty,
   setCharger
@@ -33,16 +34,16 @@ const AudioGuideTab: React.FC<AudioGuideTabProps> = ({
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <div className="md:text-lg font-semibold mb-1 capitalize">аудиогидов</div>
+            <div className="md:text-lg font-semibold mb-1 capitalize">приёмников</div>
             <div className="flex h-10 items-center border border-black rounded-lg overflow-hidden">
               <input 
                 type="text" 
-                value={input_audioguide === 0 ? '' : input_audioguide} 
+                value={input_rc === 0 ? '' : input_rc} 
                 onChange={(e) => {
                   const value = e.target.value;
                   // Only allow numbers
                   if (/^\d*$/.test(value)) {
-                    setAudioguideQty(Number(value));
+                    setReceivers(Number(value));
                   }
                 }}
                 className="flex-1 text-xs border-none outline-none px-5" 
@@ -51,16 +52,16 @@ const AudioGuideTab: React.FC<AudioGuideTabProps> = ({
             </div>
           </div>
           <div>
-            <div className="md:text-lg font-semibold mb-1 capitalize">триггеров</div>
+            <div className="md:text-lg font-semibold mb-1 capitalize">передатчиков</div>
             <div className="flex h-10 items-center border border-black rounded-lg overflow-hidden">
               <input 
                 type="text" 
-                value={input_triggers === 0 ? '' : input_triggers} 
+                value={input_tr === 0 ? '' : input_tr} 
                 onChange={(e) => {
                   const value = e.target.value;
                   // Only allow numbers
                   if (/^\d*$/.test(value)) {
-                    setTriggersQty(Number(value));
+                    setTransmitters(Number(value));
                   }
                 }}
                 className="flex-1 text-xs border-none outline-none px-5" 
@@ -102,7 +103,7 @@ const AudioGuideTab: React.FC<AudioGuideTabProps> = ({
                     setHeadphonesQty(Number(e.target.value));
                   }
                 }}
-                className="flex-1 text-xs border-none outline-none px-5" 
+                className="flex-1 border-none outline-none px-5" 
                 placeholder='0'
               />
             </div>
@@ -130,9 +131,8 @@ const AudioGuideTab: React.FC<AudioGuideTabProps> = ({
           </div>
         </div>
       </div>
-      
     </div>
   );
 };
 
-export default AudioGuideTab;
+export default UniGuideTab;

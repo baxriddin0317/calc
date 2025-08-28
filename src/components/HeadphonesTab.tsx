@@ -18,14 +18,14 @@ const HeadphonesTab: React.FC<HeadphonesTabProps> = ({
   return (
     <div className="space-y-6">
       <div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 items-end gap-3">
           <div>
             <div className="md:text-lg font-semibold mb-1">Тип наушников</div>
             <div className='relative w-full'>
               <select
                 value={select_headphones ?? ''}
                 onChange={(e) => setHeadphonesType(e.target.value ? (e.target.value as HeadphonesType) : null)}
-                className="w-full h-12 rounded-lg outline-none border border-black px-3 appearance-none pr-10"
+                className="w-full text-xs h-10 rounded-lg outline-none border border-black px-3 appearance-none pr-10"
               >
                 <option value="">Не выбрано</option>
                 <option value="in_ear">Вкладыши</option>
@@ -39,8 +39,7 @@ const HeadphonesTab: React.FC<HeadphonesTabProps> = ({
             </div>
           </div>
           <div>
-            <div className="md:text-lg font-semibold mb-1">Количество</div>
-            <div className="flex items-center h-12 border border-black rounded-lg overflow-hidden">
+            <div className="flex items-center h-10 border border-black rounded-lg overflow-hidden">
               <input 
                 type="text" 
                 value={qty_headphones === 0 ? '' : qty_headphones} 
@@ -51,7 +50,7 @@ const HeadphonesTab: React.FC<HeadphonesTabProps> = ({
                     setHeadphonesQty(Number(e.target.value));
                   }
                 }}
-                className="flex-1 border-none outline-none px-5" 
+                className="flex-1 text-xs border-none outline-none px-5" 
                 placeholder='0'
               />
             </div>

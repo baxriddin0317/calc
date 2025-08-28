@@ -35,6 +35,9 @@ export interface CalculatorState {
   select_headphones: HeadphonesType | null;
   qty_headphones: number;
   select_charger: ChargerCapacity | null;
+  // New fields for different tabs
+  input_audioguide: number; // Количество аудиогидов
+  input_triggers: number; // Количество триггеров
   promo: string;
   vatIncluded: boolean;
   vatRate: number;
@@ -66,6 +69,9 @@ export interface CalculatorActions {
   setHeadphonesType: (type: HeadphonesType | null) => void;
   setHeadphonesQty: (qty: number) => void;
   setCharger: (capacity: ChargerCapacity | null) => void;
+  // New setters for different tabs
+  setAudioguideQty: (qty: number) => void;
+  setTriggersQty: (qty: number) => void;
   setPromo: (code: string) => void;
   setVatIncluded: (included: boolean) => void;
   setVatRate: (rate: number) => void;

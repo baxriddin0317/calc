@@ -13,6 +13,8 @@ interface WebhookData {
     quantity: number;
   };
   charger: number | null;
+  audioguides: number;
+  triggers: number;
   promo: string;
   vatIncluded: boolean;
   vatRate: number;
@@ -56,6 +58,8 @@ export const formatForCRM = (data: WebhookData) => {
       'UF_CRM_HEADPHONES_TYPE': data.headphones.type || 'Не выбрано',
       'UF_CRM_HEADPHONES_QTY': data.headphones.quantity,
       'UF_CRM_CHARGER': data.charger || 'Не выбрано',
+      'UF_CRM_AUDIOGUIDES': data.audioguides,
+      'UF_CRM_TRIGGERS': data.triggers,
       'UF_CRM_PROMO': data.promo || 'Не указан',
       'UF_CRM_VAT_INCLUDED': data.vatIncluded ? 'Да' : 'Нет',
       'UF_CRM_VAT_RATE': data.vatRate,
@@ -88,6 +92,9 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
   select_headphones: null,
   qty_headphones: 0,
   select_charger: null,
+  // New fields for different tabs
+  input_audioguide: 0,
+  input_triggers: 0,
   promo: '',
   vatIncluded: false,
   vatRate: 20,
@@ -121,6 +128,14 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
   },
   setCharger: (capacity: ChargerCapacity | null) => {
     set({ select_charger: capacity });
+    get().calculateTotal();
+  },
+  setAudioguideQty: (qty: number) => {
+    set({ input_audioguide: qty });
+    get().calculateTotal();
+  },
+  setTriggersQty: (qty: number) => {
+    set({ input_triggers: qty });
     get().calculateTotal();
   },
   setPromo: (code: string) => {
@@ -184,7 +199,7 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
   // Новые действия
   calculateTotal: () => {
     const state = get();
-    const { input_rc, input_tr, input_mic, qty_headphones, select_charger, bundles, vatIncluded, vatRate } = state;
+    const { input_rc, input_tr, input_mic, qty_headphones, select_charger, input_audioguide, input_triggers, bundles, vatIncluded, vatRate } = state;
     
     // Основной расчёт цены
     let subtotal = 0;
@@ -208,6 +223,12 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
       subtotal += calculatorConfig.sku.charger[select_charger].unitPrice;
     }
     
+    // Аудиогиды
+    subtotal += input_audioguide * calculatorConfig.sku.receiver.unitPrice;
+    
+    // Триггеры
+    subtotal += input_triggers * calculatorConfig.sku.transmitter.unitPrice;
+    
     // Комплекты
     subtotal *= bundles;
     
@@ -215,7 +236,7 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
     const shippingCost = calculatorConfig.shipping[state.select_delivery];
     
     // Объёмная скидка
-    const totalDevices = input_rc + input_tr + input_mic + qty_headphones;
+    const totalDevices = input_rc + input_tr + input_mic + qty_headphones + input_audioguide + input_triggers;
     let volumeDiscount = 0;
     
     for (const rule of calculatorConfig.volumeDiscounts) {
@@ -332,6 +353,32 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
       });
     }
     
+    // Add audioguide items
+    if (state.input_audioguide > 0) {
+      cartItems.push({
+        product: {
+          id: 'audioguide',
+          name: 'Аудиогид',
+          price: calculatorConfig.sku.receiver.unitPrice, // Using receiver price as base
+          category: 'audioguide' as const
+        },
+        quantity: state.input_audioguide
+      });
+    }
+    
+    // Add trigger items
+    if (state.input_triggers > 0) {
+      cartItems.push({
+        product: {
+          id: 'trigger',
+          name: 'Триггер',
+          price: calculatorConfig.sku.transmitter.unitPrice, // Using transmitter price as base
+          category: 'audioguide' as const
+        },
+        quantity: state.input_triggers
+      });
+    }
+    
     // Логируем добавление в корзину
     console.log('Добавлено в корзину:', cartItems);
     
@@ -352,6 +399,8 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
       select_headphones: null,
       qty_headphones: 0,
       select_charger: null,
+      input_audioguide: 0,
+      input_triggers: 0,
       promo: '',
       bundles: 1,
       subtotal: 0,
@@ -378,6 +427,8 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
         quantity: state.qty_headphones
       },
       charger: state.select_charger,
+      audioguides: state.input_audioguide,
+      triggers: state.input_triggers,
       promo: state.promo,
       vatIncluded: state.vatIncluded,
       vatRate: state.vatRate,

@@ -5,13 +5,11 @@ import { TiArrowSortedDown } from 'react-icons/ti';
 interface RadioGuideTabProps {
   input_rc: number;
   input_tr: number;
-  input_mic: number;
   select_headphones: HeadphonesType | null;
   qty_headphones: number;
   select_charger: ChargerCapacity | null;
   setReceivers: (value: number) => void;
   setTransmitters: (value: number) => void;
-  setMicrophones: (value: number) => void;
   setHeadphonesType: (value: HeadphonesType | null) => void;
   setHeadphonesQty: (value: number) => void;
   setCharger: (value: ChargerCapacity | null) => void;
@@ -21,13 +19,11 @@ interface RadioGuideTabProps {
 const RadioGuideTab: React.FC<RadioGuideTabProps> = ({
   input_rc,
   input_tr,
-  input_mic,
   select_headphones,
   qty_headphones,
   select_charger,
   setReceivers,
   setTransmitters,
-  setMicrophones,
   setHeadphonesType,
   setHeadphonesQty,
   setCharger,
@@ -36,10 +32,10 @@ const RadioGuideTab: React.FC<RadioGuideTabProps> = ({
   return (
     <div className="space-y-6">
       <div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-5">
           <div>
             <div className="md:text-lg font-semibold mb-1">Приёмники</div>
-            <div className="flex h-12 items-center border border-black rounded-lg overflow-hidden">
+            <div className="flex h-10 items-center border border-black rounded-lg overflow-hidden">
               <input 
                 type="text" 
                 value={input_rc === 0 ? '' : input_rc} 
@@ -50,14 +46,14 @@ const RadioGuideTab: React.FC<RadioGuideTabProps> = ({
                     setReceivers(Number(value));
                   }
                 }}
-                className="flex-1 px-5 border-none outline-none" 
+                className="flex-1 text-xs px-5 border-none outline-none" 
                 placeholder='0'
               />
             </div>
           </div>
           <div>
             <div className="md:text-lg font-semibold mb-1">Передатчики</div>
-            <div className="flex h-12 items-center border border-black rounded-lg overflow-hidden">
+            <div className="flex h-10 items-center border border-black rounded-lg overflow-hidden">
               <input 
                 type="text" 
                 value={input_tr === 0 ? '' : input_tr} 
@@ -68,14 +64,14 @@ const RadioGuideTab: React.FC<RadioGuideTabProps> = ({
                     setTransmitters(Number(value));
                   }
                 }}
-                className="flex-1 px-5 border-none outline-none" 
+                className="flex-1 text-xs px-5 border-none outline-none" 
                 placeholder='0'
               />
             </div>
           </div>
-          <div>
+          {/* <div>
             <div className="md:text-lg font-semibold mb-1">Микрофон</div>
-            <div className="flex h-12 items-center border border-black rounded-lg overflow-hidden">
+            <div className="flex h-10 items-center border border-black rounded-lg overflow-hidden">
               <input 
                 type="text" 
                 value={input_mic === 0 ? '' : input_mic} 
@@ -90,7 +86,7 @@ const RadioGuideTab: React.FC<RadioGuideTabProps> = ({
                 placeholder='0'
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       
@@ -101,7 +97,7 @@ const RadioGuideTab: React.FC<RadioGuideTabProps> = ({
             <select
               value={select_headphones ?? ''}
               onChange={(e) => setHeadphonesType(e.target.value ? (e.target.value as HeadphonesType) : null)}
-              className="w-full h-12 rounded-lg outline-none border border-black px-3 appearance-none pr-10"
+              className="w-full text-xs h-10 rounded-lg outline-none border border-black px-3 appearance-none pr-10"
             >
               <option value="">Не выбрано</option>
               <option value="in_ear">Вкладыши</option>
@@ -114,7 +110,7 @@ const RadioGuideTab: React.FC<RadioGuideTabProps> = ({
             </div>
           </div>
           {select_headphones && (
-            <div className="flex h-12 items-center border border-black rounded-lg overflow-hidden mt-2">
+            <div className="flex h-10 items-center border border-black rounded-lg overflow-hidden mt-2">
               <input 
                 type="text" 
                 value={qty_headphones === 0 ? '' : qty_headphones} 
@@ -132,12 +128,12 @@ const RadioGuideTab: React.FC<RadioGuideTabProps> = ({
           )}
         </div>
         <div>
-          <div className="md:text-lg font-semibold mb-1">Зарядное устройство</div>
+          <div className="md:text-lg font-semibold mb-1">Аксессуары</div>
           <div className='relative w-full'>
             <select
               value={select_charger ?? ''}
               onChange={(e) => setCharger(e.target.value ? (Number(e.target.value) as ChargerCapacity) : null)}
-              className="w-full h-12 rounded-lg outline-none border border-black px-3 appearance-none pr-10"
+              className="w-full text-xs h-10 rounded-lg outline-none border border-black px-3 appearance-none pr-10"
             >
               <option value="">Не выбрано</option>
               {Object.keys(calculatorConfig.sku.charger).map(key => (

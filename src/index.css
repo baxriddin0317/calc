@@ -6,4 +6,5 @@
 
 @theme {
   --breakpoint-xxs: 40px;
+  --breakpoint-mdl: 900px
 }

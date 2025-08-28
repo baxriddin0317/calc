@@ -82,7 +82,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
                 className="flex items-center justify-between p-4 border rounded-lg"
               >
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center text-xl">
+                  <div className="w-12 h-10 bg-gray-200 rounded-lg flex items-center justify-center text-xl">
                     {item.image}
                   </div>
                   <div>
@@ -167,7 +167,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
                   onUserInfoChange({ ...userInfo, name: e.target.value })
                 }
                 placeholder="Введите имя"
-                className="w-full h-12 rounded-lg outline-none border border-black px-3"
+                className="w-full h-10 rounded-lg outline-none border border-black px-3"
               />
             </div>
             <div>
@@ -181,7 +181,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
                   onUserInfoChange({ ...userInfo, email: e.target.value })
                 }
                 placeholder="Введите Email"
-                className="w-full h-12 rounded-lg outline-none border border-black px-3"
+                className="w-full h-10 rounded-lg outline-none border border-black px-3"
               />
             </div>
             <div>
@@ -229,7 +229,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
                     });
                   }}
                   placeholder="(000) 000-00-00"
-                  className="flex-1 h-12 border border-black border-l-0 rounded-r-lg px-3 outline-none"
+                  className="flex-1 h-10 border border-black border-l-0 rounded-r-lg px-3 outline-none"
                 />
               </div>
             </div>
