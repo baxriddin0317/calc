@@ -15,10 +15,10 @@ interface WebhookData {
   charger: number | null;
   audioguides: number;
   triggers: number;
-  promo: string;
-  vatIncluded: boolean;
-  vatRate: number;
-  bundles: number;
+  // promo: string; // временно отключено
+  // vatIncluded: boolean; // временно отключено
+  // vatRate: number; // временно отключено
+  // bundles: number; // временно отключено
   total: number;
   timestamp: string;
 }
@@ -60,10 +60,10 @@ export const formatForCRM = (data: WebhookData) => {
       'UF_CRM_CHARGER': data.charger || 'Не выбрано',
       'UF_CRM_AUDIOGUIDES': data.audioguides,
       'UF_CRM_TRIGGERS': data.triggers,
-      'UF_CRM_PROMO': data.promo || 'Не указан',
-      'UF_CRM_VAT_INCLUDED': data.vatIncluded ? 'Да' : 'Нет',
-      'UF_CRM_VAT_RATE': data.vatRate,
-      'UF_CRM_BUNDLES': data.bundles,
+      // 'UF_CRM_PROMO': data.promo || 'Не указан', // временно отключено
+      // 'UF_CRM_VAT_INCLUDED': data.vatIncluded ? 'Да' : 'Нет', // временно отключено
+      // 'UF_CRM_VAT_RATE': data.vatRate, // временно отключено
+      // 'UF_CRM_BUNDLES': data.bundles, // временно отключено
       'UF_CRM_TOTAL': data.total,
       'UF_CRM_CURRENCY': 'RUB'
     }
@@ -199,7 +199,7 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
   // Новые действия
   calculateTotal: () => {
     const state = get();
-    const { input_rc, input_tr, input_mic, qty_headphones, select_charger, input_audioguide, input_triggers, bundles, vatIncluded, vatRate } = state;
+    const { input_rc, input_tr, input_mic, qty_headphones, select_charger, input_audioguide, input_triggers } = state;
     
     // Основной расчёт цены
     let subtotal = 0;
@@ -229,8 +229,8 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
     // Триггеры
     subtotal += input_triggers * calculatorConfig.sku.transmitter.unitPrice;
     
-    // Комплекты
-    subtotal *= bundles;
+    // Комплекты - временно отключено
+    // subtotal *= bundles;
     
     // Доставка
     const shippingCost = calculatorConfig.shipping[state.select_delivery];
@@ -247,40 +247,40 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
     
     const volumeDiscountAmount = (subtotal * volumeDiscount) / 100;
     
-    // Промокод скидка
-    let promoDiscount = 0;
-    if (state.promo) {
-      const promoRule = calculatorConfig.promos.find(p => p.code === state.promo);
-      if (promoRule && subtotal >= (promoRule.minAmount || 0)) {
-        if (promoRule.type === 'percentage') {
-          promoDiscount = (subtotal * promoRule.value) / 100;
-        } else {
-          promoDiscount = promoRule.value;
-        }
-      }
-    }
+    // Промокод скидка - временно отключено
+    // let promoDiscount = 0;
+    // if (state.promo) {
+    //   const promoRule = calculatorConfig.promos.find(p => p.code === state.promo);
+    //   if (promoRule && subtotal >= (promoRule.minAmount || 0)) {
+    //     if (promoRule.type === 'percentage') {
+    //       promoDiscount = (subtotal * promoRule.value) / 100;
+    //     } else {
+    //       promoDiscount = promoRule.value;
+    //     }
+    //   }
+    // }
     
-    // Общая скидка
-    const discountAmount = volumeDiscountAmount + promoDiscount;
+    // Общая скидка - без промокода
+    const discountAmount = volumeDiscountAmount;
     const discountedSubtotal = subtotal - discountAmount;
     
-    // НДС
-    let vatAmount = 0;
-    if (vatIncluded) {
-      vatAmount = (discountedSubtotal * vatRate) / (100 + vatRate);
-    } else {
-      vatAmount = (discountedSubtotal * vatRate) / 100;
-    }
+    // НДС - временно отключено
+    // let vatAmount = 0;
+    // if (vatIncluded) {
+    //   vatAmount = (discountedSubtotal * vatRate) / (100 + vatRate);
+    // } else {
+    //   vatAmount = (discountedSubtotal * vatRate) / 100;
+    // }
     
-    // Итоговая сумма
-    const total = discountedSubtotal + shippingCost + (vatIncluded ? 0 : vatAmount);
+    // Итоговая сумма - без НДС
+    const total = discountedSubtotal + shippingCost;
     
     set({
       subtotal,
       volumeDiscountAmount,
-      promoDiscountAmount: promoDiscount,
+      // promoDiscountAmount: promoDiscount, // временно отключено
       discountAmount,
-      vatAmount,
+      // vatAmount, // временно отключено
       shippingCost,
       total
     });
@@ -401,13 +401,13 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
       select_charger: null,
       input_audioguide: 0,
       input_triggers: 0,
-      promo: '',
-      bundles: 1,
+      // promo: '', // временно отключено
+      // bundles: 1, // временно отключено
       subtotal: 0,
       volumeDiscountAmount: 0,
-      promoDiscountAmount: 0,
+      // promoDiscountAmount: 0, // временно отключено
       discountAmount: 0,
-      vatAmount: 0,
+      // vatAmount: 0, // временно отключено
       shippingCost: 0,
       total: 0
     });
@@ -429,10 +429,10 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
       charger: state.select_charger,
       audioguides: state.input_audioguide,
       triggers: state.input_triggers,
-      promo: state.promo,
-      vatIncluded: state.vatIncluded,
-      vatRate: state.vatRate,
-      bundles: state.bundles,
+      // promo: state.promo, // временно отключено
+      // vatIncluded: state.vatIncluded, // временно отключено
+      // vatRate: state.vatRate, // временно отключено
+      // bundles: state.bundles, // временно отключено
       total: state.total,
       timestamp: new Date().toISOString()
     };

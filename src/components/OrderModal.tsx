@@ -27,6 +27,7 @@ interface OrderModalProps {
   onRemoveItem: (itemId: string) => void;
   onSubmit: () => void;
   formatPrice: (price: number) => string;
+  orderTotal: number;
 }
 
 const OrderModal: React.FC<OrderModalProps> = ({
@@ -39,14 +40,11 @@ const OrderModal: React.FC<OrderModalProps> = ({
   onRemoveItem,
   onSubmit,
   formatPrice,
+  orderTotal,
 }) => {
   if (!isOpen) return null;
 
-  const getOrderTotal = () => {
-    return orderItems.reduce((total, item) => {
-      return total + item.price * item.quantity;
-    }, 0);
-  };
+  // Total is provided from the calculator store to ensure consistency
 
   const handleClose = () => {
     onClose();
@@ -143,10 +141,8 @@ const OrderModal: React.FC<OrderModalProps> = ({
           {orderItems.length > 0 && (
             <div className="mt-6 p-4 bg-gray-50 rounded-lg">
               <div className="flex justify-between items-center">
-                <span className="font-semibold">Подытог заказа:</span>
-                <span className="font-bold text-lg">
-                  {formatPrice(getOrderTotal())}
-                </span>
+                <span className="font-semibold">Итого:</span>
+                <span className="font-bold text-lg">{formatPrice(orderTotal)}</span>
               </div>
             </div>
           )}
@@ -194,18 +190,23 @@ const OrderModal: React.FC<OrderModalProps> = ({
                   <select
                     className="ml-2 bg-transparent border-none outline-none"
                     value={
-                      userInfo.phone.startsWith("+7")
-                        ? "+7"
-                        : userInfo.phone.startsWith("+998")
+                      userInfo.phone.startsWith("+998")
                         ? "+998"
+                        : userInfo.phone.startsWith("+7")
+                        ? "+7"
                         : "+1"
                     }
                     onChange={(e) => {
-                      const countryCode = e.target.value;
-                      const phoneNumber = userInfo.phone.replace(/^\+\d+/, "");
+                      const newCountryCode = e.target.value;
+                      const currentCountryCode = userInfo.phone.startsWith("+998")
+                        ? "+998"
+                        : userInfo.phone.startsWith("+7")
+                        ? "+7"
+                        : "+1";
+                      const phoneNumber = userInfo.phone.replace(currentCountryCode, "");
                       onUserInfoChange({
                         ...userInfo,
-                        phone: countryCode + phoneNumber,
+                        phone: newCountryCode + phoneNumber,
                       });
                     }}
                   >
@@ -216,12 +217,19 @@ const OrderModal: React.FC<OrderModalProps> = ({
                 </div>
                 <input
                   type="tel"
-                  value={userInfo.phone.replace(/^\+\d+/, "")}
-                  onChange={(e) => {
-                    const countryCode = userInfo.phone.startsWith("+7")
-                      ? "+7"
-                      : userInfo.phone.startsWith("+998")
+                  value={(() => {
+                    const currentCountryCode = userInfo.phone.startsWith("+998")
                       ? "+998"
+                      : userInfo.phone.startsWith("+7")
+                      ? "+7"
+                      : "+1";
+                    return userInfo.phone.replace(currentCountryCode, "");
+                  })()}
+                  onChange={(e) => {
+                    const countryCode = userInfo.phone.startsWith("+998")
+                      ? "+998"
+                      : userInfo.phone.startsWith("+7")
+                      ? "+7"
                       : "+1";
                     onUserInfoChange({
                       ...userInfo,

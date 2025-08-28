@@ -33,16 +33,16 @@ const Calculator: React.FC = () => {
     input_audioguide,
     input_triggers,
     // promo,
-    // vatIncluded,
-    // vatRate,
-    bundles,
+    // vatIncluded, // временно отключено
+    // vatRate, // временно отключено
+    // bundles, // временно отключено
     // totals
     total,
-    // subtotal,
-    // volumeDiscountAmount,
-    // promoDiscountAmount,
-    // shippingCost,
-    // vatAmount,
+    subtotal,
+    volumeDiscountAmount,
+    // promoDiscountAmount, // временно отключено
+    shippingCost,
+    // vatAmount, // временно отключено
     // setters
     setDelivery,
     setReceivers,
@@ -54,8 +54,8 @@ const Calculator: React.FC = () => {
     setAudioguideQty,
     setTriggersQty,
     // setPromo,
-    // setVatIncluded,
-    // setVatRate,
+    // setVatIncluded, // временно отключено
+    // setVatRate, // временно отключено
     // setBundles,
     // actions
     clearCart,
@@ -116,8 +116,8 @@ const Calculator: React.FC = () => {
         charger: select_charger,
         audioguides: input_audioguide,
         triggers: input_triggers,
-        total,
-        bundles
+        total
+        // bundles // временно отключено
       }
     });
 
@@ -349,7 +349,7 @@ const Calculator: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 overflow-x-hidden">
-      <h1 className="hidden mdl:block text-[38px] font-semibold mb-8">
+      <h1 className="hidden mdl:block text-[38px] leading-12 font-semibold mb-6">
         Соберите свой комплект <br /> оборудования
       </h1>
       <div className="flex flex-col mdl:flex-row items-start justify-center gap-8 md:gap-14">
@@ -359,10 +359,10 @@ const Calculator: React.FC = () => {
             Соберите свой комплект <br /> оборудования
           </h1>
           <div>
-            <h2 className="font-bold mb-4">Выберите продукт</h2>
+            <h2 className="text-lg font-semibold mb-3">Выберите продукт</h2>
             
             {/* Tab Navigation */}
-            <nav className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+            <nav className="flex items-center justify-start gap-3 flex-wrap">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
@@ -375,8 +375,8 @@ const Calculator: React.FC = () => {
                 >
                   {tab.name}
                   {/* tooltip */}
-                  <span className={`absolute flex items-center justify-center cursor-pointer size-3 ${activeTab !== tab.id ? 'bg-custom-gradient text-white' : 'bg-white text-[#359AD7]'} rounded-full top-2 right-4 z-10 group`}>
-                    <MdKeyboardArrowRight />
+                  <span className={`absolute flex items-center justify-center cursor-pointer size-4 ${activeTab !== tab.id ? 'bg-custom-gradient text-white' : 'bg-white text-[#359AD7]'} rounded-full top-2 right-4 z-10 group`}>
+                    <MdKeyboardArrowRight className='text-lg' />
                     
                     {/* Tooltip */}
                     <div className="absolute min-w-[165px] w-full invisible opacity-0 group-hover:visible group-hover:opacity-100 bg-custom-gradient text-white text-xs rounded-md px-2 py-1 text-left transition-all duration-200 ease-in-out z-20 -right-5 -top-1 transform translate-x-full">
@@ -388,9 +388,9 @@ const Calculator: React.FC = () => {
             </nav>
 
             {/* Tab Content */}
-            <div className="mt-6">
+            <div className="mt-4">
               <div className=' mb-3'>
-                <h3 className="md:text-lg font-semibold mb-3">Доставка</h3>
+                <h3 className="md:text-lg font-semibold mb-1">Доставка</h3>
                 <div className="relative w-full">
                   <select
                     value={select_delivery}
@@ -481,6 +481,7 @@ const Calculator: React.FC = () => {
             onRemoveItem={removeItem}
             onSubmit={handleOrderSubmit}
             formatPrice={formatPrice}
+            orderTotal={total}
           />
         </div>
 
@@ -488,18 +489,70 @@ const Calculator: React.FC = () => {
         <div className="mdl:max-w-[344px] w-full">
           <div className="lg:sticky lg:top-6 border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
             <div className="text-xl font-semibold mb-6 text-gray-800">Ваш комплект</div>
-            
+            {/* Selected items list */}
+            <div className="space-y-6 mb-6">
+              {getOrderItems().map((item, index) => (
+                <div key={item.id} className="text-gray-800">
+                  <div className="text-sm text-gray-600">
+                    {index + 1}. {item.name} x{item.quantity}:
+                  </div>
+                  <div className="pl-3 text-sm text-gray-600">
+                    {formatPrice(item.price * item.quantity)}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Price breakdown */}
+            <div className="space-y-3 mb-6">
+              <div className="flex justify-between text-sm text-gray-600">
+                <span>Подытог:</span>
+                <span>{formatPrice(subtotal || 0)}</span>
+              </div>
+              
+              {volumeDiscountAmount > 0 && (
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>Скидка за объём:</span>
+                  <span>-{formatPrice(volumeDiscountAmount)}</span>
+                </div>
+              )}
+              
+              {/* Промокод - временно отключено */}
+              {/* {promoDiscountAmount > 0 && (
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>Промокод:</span>
+                  <span>-{formatPrice(promoDiscountAmount)}</span>
+                </div>
+              )} */}
+              
+              {shippingCost > 0 && (
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>Доставка:</span>
+                  <span>{formatPrice(shippingCost)}</span>
+                </div>
+              )}
+              
+              {/* НДС - временно отключено */}
+              {/* {vatAmount > 0 && (
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>НДС ({vatRate}%):</span>
+                  <span>{formatPrice(vatAmount)}</span>
+                </div>
+              )} */}
+              
+              <hr className="border-gray-200" />
+            </div>
             {/* Total */}
             <div className="mb-3">
               <div className="flex justify-between items-center">
                 <span className="text-lg font-medium text-gray-800">Итого</span>
                 <span className="text-3xl font-bold text-primary-600">{formatPrice(total)}</span>
               </div>
-              {bundles > 1 && (
+              {/* Комплекты - временно отключено */}
+              {/* {bundles > 1 && (
                 <div className="text-xs text-gray-500 mt-1">
                   За {bundles} комплект{bundles > 1 ? (bundles > 4 ? 'ов' : 'а') : ''}
                 </div>
-              )}
+              )} */}
             </div>
             
             {/* Action buttons */}
