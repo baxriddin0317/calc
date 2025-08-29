@@ -155,8 +155,8 @@ export const calculatorConfig: CalculatorConfig = {
   ],
   shipping: {
     moscow: 0,
-    rf: 1500,
-    world: 4000
+    rf: 0,
+    world: 0
   },
   promos: [
     { code: 'WELCOME10', type: 'percentage', value: 10, stackWithVolume: true },

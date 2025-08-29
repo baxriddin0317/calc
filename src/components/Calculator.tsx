@@ -348,7 +348,7 @@ const Calculator: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 overflow-x-hidden">
+    <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 lg:pt-[100px] overflow-x-hidden">
       <h1 className="hidden mdl:block text-[38px] leading-12 font-semibold mb-6">
         Соберите свой комплект <br /> оборудования
       </h1>

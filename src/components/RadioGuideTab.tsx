@@ -32,7 +32,7 @@ const RadioGuideTab: React.FC<RadioGuideTabProps> = ({
   return (
     <div className="space-y-6">
       <div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <div className="md:text-lg font-semibold mb-1">Приёмники</div>
             <div className="flex h-10 items-center border border-black rounded-lg overflow-hidden">
