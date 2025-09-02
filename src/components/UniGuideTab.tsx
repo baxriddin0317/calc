@@ -34,7 +34,7 @@ const UniGuideTab: React.FC<UniGuideTabProps> = ({
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <div className="md:text-lg font-semibold mb-1 capitalize">приёмников</div>
+            <div className="md:text-lg font-semibold mb-1 capitalize">Приёмники</div>
             <div className="flex h-10 items-center border border-black rounded-lg overflow-hidden">
               <input 
                 type="text" 
@@ -52,7 +52,7 @@ const UniGuideTab: React.FC<UniGuideTabProps> = ({
             </div>
           </div>
           <div>
-            <div className="md:text-lg font-semibold mb-1 capitalize">передатчиков</div>
+            <div className="md:text-lg font-semibold mb-1 capitalize">Передатчики</div>
             <div className="flex h-10 items-center border border-black rounded-lg overflow-hidden">
               <input 
                 type="text" 
@@ -115,7 +115,7 @@ const UniGuideTab: React.FC<UniGuideTabProps> = ({
             <select
               value={select_charger ?? ''}
               onChange={(e) => setCharger(e.target.value ? (Number(e.target.value) as ChargerCapacity) : null)}
-              className="w-full h-10 rounded-lg outline-none border border-black px-3 appearance-none pr-10"
+              className="w-full text-xs h-10 rounded-lg outline-none border border-black px-3 appearance-none pr-10"
             >
               <option value="">Не выбрано</option>
               {Object.keys(calculatorConfig.sku.charger).map(key => (

@@ -39,7 +39,6 @@ const Calculator: React.FC = () => {
     // totals
     total,
     subtotal,
-    volumeDiscountAmount,
     // promoDiscountAmount, // временно отключено
     shippingCost,
     // vatAmount, // временно отключено
@@ -508,13 +507,6 @@ const Calculator: React.FC = () => {
                 <span>Подытог:</span>
                 <span>{formatPrice(subtotal || 0)}</span>
               </div>
-              
-              {volumeDiscountAmount > 0 && (
-                <div className="flex justify-between text-sm text-green-600">
-                  <span>Скидка за объём:</span>
-                  <span>-{formatPrice(volumeDiscountAmount)}</span>
-                </div>
-              )}
               
               {/* Промокод - временно отключено */}
               {/* {promoDiscountAmount > 0 && (

@@ -114,7 +114,7 @@ const AudioGuideTab: React.FC<AudioGuideTabProps> = ({
             <select
               value={select_charger ?? ''}
               onChange={(e) => setCharger(e.target.value ? (Number(e.target.value) as ChargerCapacity) : null)}
-              className="w-full h-10 rounded-lg text-sm outline-none border border-black px-3 appearance-none pr-10"
+              className="w-full text-xs h-10 rounded-lg outline-none border border-black px-3 appearance-none pr-10"
             >
               <option value="">Не выбрано</option>
               {Object.keys(calculatorConfig.sku.charger).map(key => (

@@ -46,7 +46,7 @@ export interface CalculatorState {
   shipping: Shipping | null;
   discount: Discount | null;
   subtotal: number;
-  volumeDiscountAmount: number;
+  // volumeDiscountAmount: number;
   promoDiscountAmount: number;
   discountAmount: number;
   vatAmount: number;

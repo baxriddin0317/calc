@@ -78,7 +78,7 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
   shipping: null,
   discount: null,
   subtotal: 0,
-  volumeDiscountAmount: 0,
+  // volumeDiscountAmount: 0,
   promoDiscountAmount: 0,
   discountAmount: 0,
   vatAmount: 0,
@@ -245,7 +245,7 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
       }
     }
     
-    const volumeDiscountAmount = (subtotal * volumeDiscount) / 100;
+    // const volumeDiscountAmount = (subtotal * volumeDiscount) / 100;
     
     // Промокод скидка - временно отключено
     // let promoDiscount = 0;
@@ -261,8 +261,8 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
     // }
     
     // Общая скидка - без промокода
-    const discountAmount = volumeDiscountAmount;
-    const discountedSubtotal = subtotal - discountAmount;
+    // const discountAmount = volumeDiscountAmount;
+    const discountedSubtotal = subtotal;
     
     // НДС - временно отключено
     // let vatAmount = 0;
@@ -277,9 +277,9 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
     
     set({
       subtotal,
-      volumeDiscountAmount,
+      // volumeDiscountAmount,
       // promoDiscountAmount: promoDiscount, // временно отключено
-      discountAmount,
+      // discountAmount,
       // vatAmount, // временно отключено
       shippingCost,
       total
@@ -404,7 +404,7 @@ const useCalculatorStore = create<CalculatorState & CalculatorActions>((set, get
       // promo: '', // временно отключено
       // bundles: 1, // временно отключено
       subtotal: 0,
-      volumeDiscountAmount: 0,
+      // volumeDiscountAmount: 0,
       // promoDiscountAmount: 0, // временно отключено
       discountAmount: 0,
       // vatAmount: 0, // временно отключено
